@@ -17,8 +17,7 @@
 - **简洁界面**：简单易用的图形用户界面
 
 ## 截图
-
-![image-20250417175834795](D:\GR\img-yasuo\image-20250417175834795.png)
+![image](https://github.com/user-attachments/assets/a11d90d1-fff5-461e-aad1-2ea72c08778d)
 
 ## 安装方法
 
