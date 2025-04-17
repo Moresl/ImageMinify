@@ -18,13 +18,13 @@
 
 ## 截图
 
-![应用截图](docs/screenshots/screenshot.png)
+![image-20250417175834795](D:\GR\img-yasuo\image-20250417175834795.png)
 
 ## 安装方法
 
 ### 方法1：下载可执行文件
 
-1. 从[Releases](https://github.com/yourusername/img-yasuo/releases)页面下载最新版本的可执行文件
+1. 从[Releases](https://github.com/Moresl/ImageMinify/releases)页面下载最新版本的可执行文件
 2. 解压缩下载的文件
 3. 双击`图片压缩工具.exe`运行程序
 
@@ -32,7 +32,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/img-yasuo.git
+git clone https://github.com/Moresl/ImageMinify
 cd img-yasuo
 
 # 安装依赖
@@ -94,3 +94,7 @@ python build.py
 - [PyQt5](https://www.riverbankcomputing.com/software/pyqt/)
 - [Pillow](https://python-pillow.org/)
 - [PyInstaller](https://www.pyinstaller.org/)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Moresl/ImageMinify&type=Date)](https://www.star-history.com/#Moresl/ImageMinify&Date)
