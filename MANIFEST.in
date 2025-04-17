@@ -1,0 +1,7 @@
+include LICENSE
+include README.md
+include icon.ico
+include requirements.txt
+recursive-include docs *
+recursive-include tests *
+global-exclude *.py[cod] __pycache__ *.so *.dylib
