@@ -95,7 +95,7 @@ python build.py
 - [PyInstaller](https://www.pyinstaller.org/)
   
 ## 贡献人员卡片
-https://contrib.rocks/image?repo=Moresl/ImageMinify
+[贡献人员卡片](https://contrib.rocks/image?repo=Moresl/ImageMinify)
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Moresl/ImageMinify&type=Date)](https://www.star-history.com/#Moresl/ImageMinify&Date)
