@@ -96,7 +96,7 @@ python build.py
   
 ## 贡献人
 <a href="https://github.com/Moresl/ImageMinify/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Moresl/ImageMinify" />
+  <img src="https://contrib.rocks/image?repo=Moresl/ImageMinify](https://opencollective.com/imageminify/contributors.svg?width=890&button=false" />
 </a>
 
 ## Star History
