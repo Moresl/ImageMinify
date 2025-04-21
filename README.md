@@ -94,11 +94,10 @@ python build.py
 - [Pillow](https://python-pillow.org/)
 - [PyInstaller](https://www.pyinstaller.org/)
   
+## 贡献人
 <a href="https://github.com/Moresl/ImageMinify/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Moresl/ImageMinify" />
 </a>
-
-Made with [contrib.rocks](https://contrib.rocks).
 
 ## Star History
 
