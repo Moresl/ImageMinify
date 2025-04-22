@@ -1,6 +1,6 @@
 # 图片压缩工具 (Image Compressor)
 
-![License](https://img.shields.io/github/license/yourusername/img-yasuo)
+![License](https://img.shields.io/github/license/moresl/ImageMinify)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
 
