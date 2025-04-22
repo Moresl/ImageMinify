@@ -93,11 +93,6 @@ python build.py
 - [PyQt5](https://www.riverbankcomputing.com/software/pyqt/)
 - [Pillow](https://python-pillow.org/)
 - [PyInstaller](https://www.pyinstaller.org/)
-  
-## 贡献人
-<a href="https://github.com/Moresl/ImageMinify/graphs/contributors">
-  <img src="https://opencollective.com/imageminify/contributors.svg?width=890&button=false" />
-</a>
 
 ## Star History
 
