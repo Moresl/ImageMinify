@@ -4,14 +4,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="ImgYasuo",
+    name="ImageMinify",
     version="1.0.0",
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="Moresl",
+    author_email="xd@biekanle.com",
     description="一款简洁高效的图片压缩工具",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/ImgYasuo",
+    url="https://github.com/Moresl/ImageMinify",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
