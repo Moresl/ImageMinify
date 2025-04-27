@@ -4,6 +4,8 @@
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
 
+[English](README_EN.md) | 中文
+
 一个简单高效的图片压缩工具，支持多种格式，提供无损压缩选项，并具有批量处理和文件重命名功能。
 
 ## 功能特点
