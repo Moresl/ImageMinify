@@ -27,31 +27,27 @@ class CompressionThread(QThread):
 
     def run(self):
         def progress_callback(processed, total, result):
-            # Apply renaming if enabled
             if self.rename_settings and self.rename_settings['enabled'] and result and result['success']:
-                # Get original output path
+              
                 original_output_path = result['compressed_path']
 
-                # Generate new filename
+              
                 dir_path = os.path.dirname(original_output_path)
                 ext = os.path.splitext(original_output_path)[1]
 
-                # Create new filename with prefix, separator and number
                 prefix = self.rename_settings['prefix']
                 separator = self.rename_settings['separator']
                 number = self.rename_settings['start_number'] + processed - 1
 
-                # Format number with leading zeros based on total files
                 digits = len(str(total + self.rename_settings['start_number'] - 1))
                 formatted_number = str(number).zfill(digits)
 
                 new_filename = f"{prefix}{separator}{formatted_number}{ext}"
                 new_path = os.path.join(dir_path, new_filename)
 
-                # Rename the file
                 try:
                     os.rename(original_output_path, new_path)
-                    # Update the result with new path
+                    
                     result['compressed_path'] = new_path
                 except Exception as e:
                     print(f"Error renaming file: {e}")
@@ -59,7 +55,7 @@ class CompressionThread(QThread):
             self.progress_signal.emit(processed, total, result)
 
         if self.directory:
-            # 处理目录
+         
             results, summary = self.compressor.compress_directory(
                 self.directory,
                 output_format=self.output_format,
@@ -67,7 +63,6 @@ class CompressionThread(QThread):
                 callback=progress_callback
             )
         else:
-            # 处理单个文件或多个文件
             results = []
             total_original_size = 0
             total_compressed_size = 0
@@ -85,7 +80,7 @@ class CompressionThread(QThread):
                     total_original_size += result['original_size']
                     total_compressed_size += result['compressed_size']
 
-                # 调用回调函数更新进度
+                # 调用回调函数
                 progress_callback(i + 1, total_files, result)
 
             # 计算总体统计信息
