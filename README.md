@@ -8,6 +8,15 @@
 
 一个简单高效的图片压缩工具，支持多种格式，提供无损压缩选项，并具有批量处理和文件重命名功能。
 
+## 相关项目
+
+本项目有两个版本，满足不同使用场景：
+
+| 版本 | 描述 | 开源地址 |
+|------|------|----------|
+| **软件版** | 当前项目，基于 Python + PyQt5 的桌面应用 | [ImageMinify](https://github.com/Moresl/ImageMinify) |
+| **网页版** | 基于 React + FastAPI 的在线图片压缩工具 | [snapimg](https://github.com/Moresl/snapimg) |
+
 ## 功能特点
 
 - **多格式支持**：支持JPEG、PNG、WebP等常见图片格式
