@@ -5,20 +5,16 @@ import os
 # Add parent directory to path to import ui module
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Import PyQt5 and UI classes
+# Import UI class (now requires qfluentwidgets)
 try:
     from PyQt5.QtWidgets import QApplication
-    from PyQt5.QtTest import QTest
-    from PyQt5.QtCore import Qt
     from ui import ImageCompressorUI
-    
-    # Flag to indicate if PyQt5 is available
-    PYQT_AVAILABLE = True
-except ImportError:
-    # PyQt5 not available, tests will be skipped
-    PYQT_AVAILABLE = False
 
-@unittest.skipIf(not PYQT_AVAILABLE, "PyQt5 is not available")
+    UI_AVAILABLE = True
+except ImportError:
+    UI_AVAILABLE = False
+
+@unittest.skipIf(not UI_AVAILABLE, "PyQt5 or qfluentwidgets is not available")
 class TestImageCompressorUI(unittest.TestCase):
     """Tests for the ImageCompressorUI class"""
     

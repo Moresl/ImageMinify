@@ -6,7 +6,7 @@
 
 [English](README_EN.md) | 中文
 
-一个简单高效的图片压缩工具，支持多种格式，提供无损压缩选项，并具有批量处理和文件重命名功能。
+一个简单高效的图片压缩工具，支持多种格式，提供高质量 PNG/JPEG 压缩，并具有批量处理和文件重命名功能。
 
 ## 相关项目
 
@@ -22,7 +22,10 @@
 - **多格式支持**：支持JPEG、PNG、WebP等常见图片格式
 - **批量处理**：可选择整个目录或特定图片文件进行压缩
 - **格式转换**：可将图片转换为JPEG、PNG或WebP格式
-- **无损压缩**：对PNG图像进行高效无损压缩
+- **PNG 量化压缩**：优先使用 imagequant 算法，并启用 Floyd-Steinberg 抖动
+- **无损优化**：支持使用 oxipng 对 PNG 进行二次无损优化（环境可用时）
+- **JPEG 优化**：支持使用 MozJPEG 无损优化（环境可用时）
+- **Fluent UI**：支持接入 Fluent Widgets 组件风格
 - **文件重命名**：支持自定义前缀、分隔符和序号
 - **详细统计**：显示压缩前后的文件大小和压缩比例
 - **简洁界面**：简单易用的图形用户界面
@@ -87,9 +90,17 @@ python build.py
 ## 技术细节
 
 - 使用PyQt5构建图形界面
+- 支持 PyQt-Fluent-Widgets 组件风格
 - 使用Pillow (PIL)进行图像处理
-- 对PNG图像使用高级压缩算法
+- PNG：imagequant + Floyd-Steinberg + oxipng（可用时）
+- JPEG：MozJPEG 优化（可用时）
 - 多线程处理，保持界面响应性
+
+## 可选外部能力说明
+
+- `imagequant`：用于更高压缩率 PNG 量化
+- `mozjpeg-lossless-optimization`：用于 JPEG 二次无损优化
+- `oxipng`：建议自行安装到系统 PATH，或放到 `bin/oxipng(.exe)`
 
 ## 贡献指南
 

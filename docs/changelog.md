@@ -30,6 +30,21 @@
 
 - 无（首次发布）
 
+## [1.1.0] - 2026-02-06
+
+### 添加
+
+- PNG 压缩链路升级：优先 imagequant 量化 + Floyd-Steinberg 抖动
+- PNG 无损二次优化：支持 oxipng（可用时自动启用）
+- JPEG 压缩链路升级：支持 MozJPEG 无损优化（可用时自动启用）
+- UI 新增压缩引擎能力展示标签
+- UI 支持接入 PyQt-Fluent-Widgets 组件风格（可选）
+
+### 变更
+
+- `requirements.txt` 增加 `imagequant`、`mozjpeg-lossless-optimization`、`PyQt-Fluent-Widgets`
+- `setup.py` 同步新增上述依赖
+
 ## [0.9.0] - 2025-04-15
 
 ### 添加
