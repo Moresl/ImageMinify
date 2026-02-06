@@ -6,14 +6,17 @@
 
 [中文](README.md) | English
 
-A simple and efficient image compression tool that supports multiple formats, provides lossless compression options, and features batch processing and file renaming capabilities.
+A simple and efficient image compression tool that supports multiple formats, provides high-quality PNG/JPEG compression, and features batch processing and file renaming capabilities.
 
 ## Features
 
 - **Multiple Format Support**: Supports common image formats such as JPEG, PNG, WebP, etc.
 - **Batch Processing**: Select an entire directory or specific image files for compression
 - **Format Conversion**: Convert images to JPEG, PNG, or WebP format
-- **Lossless Compression**: Efficient lossless compression for PNG images
+- **PNG Quantization**: Prioritizes imagequant with Floyd-Steinberg dithering
+- **Lossless Optimization**: Supports PNG post-optimization via oxipng (when available)
+- **JPEG Optimization**: Supports MozJPEG lossless optimization (when available)
+- **Fluent UI**: Supports Fluent Widgets style integration
 - **File Renaming**: Support for custom prefixes, separators, and sequential numbering
 - **Detailed Statistics**: Display file sizes before and after compression and compression ratios
 - **Clean Interface**: Simple and user-friendly graphical interface
@@ -78,9 +81,17 @@ The generated executable will be located in the `dist` directory.
 ## Technical Details
 
 - Built with PyQt5 for the graphical interface
+- Supports PyQt-Fluent-Widgets style components
 - Uses Pillow (PIL) for image processing
-- Advanced compression algorithms for PNG images
+- PNG pipeline: imagequant + Floyd-Steinberg + oxipng (when available)
+- JPEG pipeline: MozJPEG optimization (when available)
 - Multi-threaded processing to keep the interface responsive
+
+## Optional external capabilities
+
+- `imagequant`: higher-ratio PNG quantization
+- `mozjpeg-lossless-optimization`: JPEG lossless post-optimization
+- `oxipng`: install in PATH or put binary at `bin/oxipng(.exe)`
 
 ## Contributing
 
