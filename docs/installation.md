@@ -1,104 +1,71 @@
 # 安装指南
 
-本文档提供了图片压缩工具的详细安装说明。
+本文档提供了 ImageMinify 图片压缩工具的详细安装说明。
 
 ## 系统要求
 
-- **操作系统**：Windows 7/8/10/11
-- **Python版本**（仅从源码安装时需要）：Python 3.8或更高版本
-- **磁盘空间**：约100MB
+- **操作系统**：Windows 10/11
+- **.NET 版本**（仅从源码构建时需要）：.NET 10 SDK
+- **磁盘空间**：约 50MB
 
-## 方法1：使用预编译的可执行文件（推荐）
+## 方法 1：使用预编译的可执行文件（推荐）
 
-这是最简单的安装方法，不需要安装Python或任何依赖项。
+这是最简单的安装方法，不需要安装 .NET SDK。
 
-1. 访问[GitHub Releases页面](https://github.com/yourusername/img-yasuo/releases)
-2. 下载最新版本的`图片压缩工具_vX.X.X.zip`文件
+1. 访问 [GitHub Releases 页面](https://github.com/Moresl/ImageMinify/releases)
+2. 下载最新版本的压缩包
 3. 解压缩下载的文件到任意位置
-4. 双击`图片压缩工具.exe`运行程序
+4. 双击 `ImageMinify.exe` 运行程序
 
-## 方法2：从源代码安装
+> 自包含版本已内置 .NET 运行时，无需额外安装。
 
-如果您想从源代码安装或进行开发，请按照以下步骤操作：
+## 方法 2：从源代码构建
 
-### 先决条件
+如果您想从源代码构建或进行开发，请按照以下步骤操作。
 
-- Python 3.8或更高版本
-- pip（Python包管理器）
+### 前置要求
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - Git（可选，用于克隆仓库）
 
 ### 步骤
 
-1. **克隆或下载仓库**
+```bash
+# 克隆仓库
+git clone https://github.com/Moresl/ImageMinify
+cd ImageMinify
 
-   ```bash
-   # 使用Git克隆
-   git clone https://github.com/yourusername/img-yasuo.git
-   cd img-yasuo
-   
-   # 或者下载ZIP文件并解压
-   # https://github.com/yourusername/img-yasuo/archive/refs/heads/main.zip
-   ```
+# 还原 NuGet 依赖
+dotnet restore
 
-2. **创建虚拟环境（可选但推荐）**
+# 构建项目
+dotnet build -c Release
 
-   ```bash
-   # 创建虚拟环境
-   python -m venv venv
-   
-   # 在Windows上激活虚拟环境
-   venv\Scripts\activate
-   
-   # 在Linux/Mac上激活虚拟环境
-   # source venv/bin/activate
-   ```
+# 运行程序
+dotnet run -c Release
+```
 
-3. **安装依赖项**
+### 发布为独立可执行文件
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+# 发布为独立应用（包含 .NET 运行时）
+dotnet publish -c Release -r win-x64 --self-contained true
 
-4. **运行程序**
+# 发布为依赖框架的应用（需要用户安装 .NET 运行时）
+dotnet publish -c Release -r win-x64 --self-contained false
+```
 
-   ```bash
-   python main.py
-   ```
+输出文件位于 `bin/Release/net10.0-windows/win-x64/publish/` 目录。
 
-## 方法3：构建自己的可执行文件
+## 可选：原生压缩库
 
-如果您想自己构建可执行文件，请按照以下步骤操作：
+ImageMinify 支持可选的原生压缩库以提升压缩质量：
 
-1. 按照"从源代码安装"的步骤1-3进行操作
-2. 安装PyInstaller
+- **imagequant**：PNG 量化压缩，提供更好的 PNG 压缩效果
+- **MozJPEG**：JPEG 无损优化
 
-   ```bash
-   pip install pyinstaller
-   ```
+将对应的 DLL 文件放置在应用程序的 `bin/` 目录下即可自动加载。未安装时程序仍可正常运行，仅使用 ImageSharp 内置压缩。
 
-3. 运行构建脚本
+## 卸载
 
-   ```bash
-   python build.py
-   ```
-
-4. 构建完成后，可执行文件将位于`dist`目录中
-
-## 故障排除
-
-### 常见问题
-
-1. **程序无法启动**
-   - 确保您的Windows版本是受支持的版本
-   - 尝试以管理员身份运行程序
-   - 检查是否安装了所有必要的Visual C++ Redistributable包
-
-2. **缺少DLL错误**
-   - 下载并安装最新的[Visual C++ Redistributable](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
-
-3. **从源代码安装时的依赖项错误**
-   - 确保您使用的是Python 3.8或更高版本
-   - 尝试更新pip：`python -m pip install --upgrade pip`
-   - 逐个安装依赖项，查看具体错误信息
-
-如果您遇到其他问题，请在[GitHub Issues](https://github.com/yourusername/img-yasuo/issues)页面报告。
+直接删除应用程序文件夹即可。设置信息存储在 Windows 注册表中，如需清理可手动删除相关注册表项。

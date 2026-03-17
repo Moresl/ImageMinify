@@ -1,12 +1,13 @@
-# 图片压缩工具 (Image Compressor)
+# 图片压缩工具 (ImageMinify)
 
 ![License](https://img.shields.io/github/license/moresl/ImageMinify)
-![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+![.NET](https://img.shields.io/badge/.NET-10.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
+![UI](https://img.shields.io/badge/UI-WPF%20%2B%20WPF--UI-blueviolet)
 
 [English](README_EN.md) | 中文
 
-一个简单高效的图片压缩工具，支持多种格式，提供高质量 PNG/JPEG 压缩，并具有批量处理和文件重命名功能。
+一个简单高效的图片压缩工具，基于 C# WPF 开发，支持多种格式，提供高质量 PNG/JPEG/WebP 压缩，并具有批量处理和文件重命名功能。
 
 ## 相关项目
 
@@ -14,108 +15,130 @@
 
 | 版本 | 描述 | 开源地址 |
 |------|------|----------|
-| **软件版** | 当前项目，基于 Python + PyQt5 的桌面应用 | [ImageMinify](https://github.com/Moresl/ImageMinify) |
+| **桌面版** | 当前项目，基于 C# WPF + WPF-UI 的桌面应用 | [ImageMinify](https://github.com/Moresl/ImageMinify) |
 | **网页版** | 基于 React + FastAPI 的在线图片压缩工具 | [snapimg](https://github.com/Moresl/snapimg) |
 
 ## 功能特点
 
-- **多格式支持**：支持JPEG、PNG、WebP等常见图片格式
+- **多格式支持**：支持 JPEG、PNG、WebP 等常见图片格式
 - **批量处理**：可选择整个目录或特定图片文件进行压缩
-- **格式转换**：可将图片转换为JPEG、PNG或WebP格式
-- **PNG 量化压缩**：优先使用 imagequant 算法，并启用 Floyd-Steinberg 抖动
-- **无损优化**：支持使用 oxipng 对 PNG 进行二次无损优化（环境可用时）
-- **JPEG 优化**：支持使用 MozJPEG 无损优化（环境可用时）
-- **Fluent UI**：支持接入 Fluent Widgets 组件风格
+- **格式转换**：可将图片转换为 JPEG、PNG 或 WebP 格式
+- **PNG 量化压缩**：支持 imagequant 算法 + Floyd-Steinberg 抖动
+- **JPEG 优化**：支持 MozJPEG 无损优化（环境可用时）
+- **EXIF 信息**：支持读取和保留图片 EXIF 元数据
+- **Fluent 设计**：采用 [WPF-UI](https://github.com/lepoco/wpfui) 实现现代 Fluent Design 风格
 - **文件重命名**：支持自定义前缀、分隔符和序号
 - **详细统计**：显示压缩前后的文件大小和压缩比例
-- **简洁界面**：简单易用的图形用户界面
+- **设置持久化**：自动保存用户偏好设置
+
+## 技术栈
+
+- **框架**：.NET 10 + WPF
+- **UI 库**：[WPF-UI](https://github.com/lepoco/wpfui)（Fluent Design）
+- **图像处理**：[SixLabors.ImageSharp](https://github.com/SixLabors/ImageSharp)
+- **EXIF 读取**：[MetadataExtractor](https://github.com/drewnoakes/metadata-extractor-dotnet)
+- **MVVM**：[CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet)
+- **原生压缩**：imagequant（可选）、MozJPEG（可选）
 
 ## 截图
+
 ![image](https://github.com/user-attachments/assets/a11d90d1-fff5-461e-aad1-2ea72c08778d)
+
+> 截图为旧版 Python 界面，C# 版截图即将更新
 
 ## 安装方法
 
-### 方法1：下载可执行文件
+### 方法 1：下载可执行文件
 
-1. 从[Releases](https://github.com/Moresl/ImageMinify/releases)页面下载最新版本的可执行文件
+1. 从 [Releases](https://github.com/Moresl/ImageMinify/releases) 页面下载最新版本
 2. 解压缩下载的文件
-3. 双击`图片压缩工具.exe`运行程序
+3. 双击 `ImageMinify.exe` 运行程序
 
-### 方法2：从源代码安装
+### 方法 2：从源代码构建
+
+**前置要求**：
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 ```bash
 # 克隆仓库
 git clone https://github.com/Moresl/ImageMinify
-cd img-yasuo
+cd ImageMinify
 
-# 安装依赖
-pip install -r requirements.txt
+# 构建项目
+dotnet build -c Release
 
 # 运行程序
-python main.py
+dotnet run -c Release
 ```
 
 ## 使用方法
 
 1. **选择文件或目录**：
-   - 点击"选择目录"按钮选择包含图片的文件夹，或
-   - 点击"选择文件"按钮选择一个或多个图片文件
+   - 点击"选择目录"按钮选择包含图片的文件夹
+   - 或点击"选择文件"按钮选择一个或多个图片文件
 
 2. **选择输出格式**：
    - 保持原格式：保持原始格式但进行优化
-   - JPEG：转换为JPEG格式（可调整质量）
-   - PNG：转换为优化的PNG格式
-   - WebP：转换为WebP格式
+   - JPEG：转换为 JPEG 格式（可调整质量）
+   - PNG：转换为优化的 PNG 格式
+   - WebP：转换为 WebP 格式
 
 3. **调整设置**：
-   - 如果选择JPEG格式，可以调整质量滑块
-   - 如果需要重命名文件，勾选"启用重命名"并设置相关选项
+   - 调整压缩质量滑块
+   - 如需重命名文件，勾选"启用重命名"并设置相关选项
 
 4. **开始压缩**：
    - 点击"开始压缩"按钮开始处理
-   - 处理完成后，可以在表格中查看每个文件的压缩结果
+   - 处理完成后，可在表格中查看每个文件的压缩结果
 
-## 构建可执行文件
+## 发布构建
 
 ```bash
-# 安装PyInstaller
-pip install pyinstaller
-
-# 运行构建脚本
-python build.py
+# 发布为独立可执行文件
+dotnet publish -c Release -r win-x64 --self-contained true
 ```
 
-生成的可执行文件将位于`dist`目录中。
+生成的文件位于 `bin/Release/net10.0-windows/win-x64/publish/` 目录。
 
-## 技术细节
+## 项目结构
 
-- 使用PyQt5构建图形界面
-- 支持 PyQt-Fluent-Widgets 组件风格
-- 使用Pillow (PIL)进行图像处理
-- PNG：imagequant + Floyd-Steinberg + oxipng（可用时）
-- JPEG：MozJPEG 优化（可用时）
-- 多线程处理，保持界面响应性
+```
+ImageMinify/
+├── App.xaml(.cs)              # 应用入口
+├── GlobalUsings.cs            # 全局 using 声明
+├── ImageMinify.csproj         # 项目文件
+├── Models/                    # 数据模型
+│   ├── CompressionResult.cs   # 压缩结果
+│   ├── CompressionSummary.cs  # 压缩统计
+│   ├── EngineCapabilities.cs  # 引擎能力
+│   └── RenameSettings.cs      # 重命名设置
+├── Services/                  # 业务服务
+│   ├── ImageCompressor.cs     # 图像压缩（主服务）
+│   ├── PngCompressor.cs       # PNG 压缩
+│   ├── JpegCompressor.cs      # JPEG 压缩
+│   ├── WebpCompressor.cs      # WebP 压缩
+│   ├── ExifService.cs         # EXIF 元数据
+│   ├── FileRenameService.cs   # 文件重命名
+│   └── SettingsService.cs     # 设置持久化
+├── ViewModels/                # 视图模型 (MVVM)
+│   └── MainViewModel.cs       # 主视图模型
+├── Views/                     # 视图
+│   └── MainWindow.xaml(.cs)   # 主窗口
+├── Helpers/                   # 工具类
+└── tests/                     # 单元测试
+```
 
-## 可选外部能力说明
+## 贡献
 
-- `imagequant`：用于更高压缩率 PNG 量化
-- `mozjpeg-lossless-optimization`：用于 JPEG 二次无损优化
-- `oxipng`：建议自行安装到系统 PATH，或放到 `bin/oxipng(.exe)`
-
-## 贡献指南
-
-欢迎贡献代码、报告问题或提出改进建议！请查看[贡献指南](CONTRIBUTING.md)了解详情。
+欢迎贡献！请查看 [贡献指南](CONTRIBUTING.md) 了解详情。
 
 ## 许可证
 
-本项目采用MIT许可证 - 详见[LICENSE](LICENSE)文件。
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
 
 ## 致谢
 
-- [PyQt5](https://www.riverbankcomputing.com/software/pyqt/)
-- [Pillow](https://python-pillow.org/)
-- [PyInstaller](https://www.pyinstaller.org/)
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Moresl/ImageMinify&type=Date)](https://www.star-history.com/#Moresl/ImageMinify&Date)
+- [SixLabors.ImageSharp](https://github.com/SixLabors/ImageSharp) - 跨平台图像处理
+- [WPF-UI](https://github.com/lepoco/wpfui) - Fluent Design WPF 控件库
+- [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) - MVVM 工具包
+- [MetadataExtractor](https://github.com/drewnoakes/metadata-extractor-dotnet) - 图片元数据读取

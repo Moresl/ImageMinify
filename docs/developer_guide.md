@@ -1,184 +1,165 @@
 # 开发者文档
 
-本文档提供了图片压缩工具的技术细节和开发指南，适用于想要理解、修改或扩展项目的开发者。
+本文档提供了 ImageMinify 的技术细节和开发指南。
+
+## 技术栈
+
+| 组件 | 技术 |
+|------|------|
+| 运行时 | .NET 10 |
+| UI 框架 | WPF + [WPF-UI](https://github.com/lepoco/wpfui) |
+| MVVM | [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) |
+| 图像处理 | [SixLabors.ImageSharp](https://github.com/SixLabors/ImageSharp) |
+| EXIF 读取 | [MetadataExtractor](https://github.com/drewnoakes/metadata-extractor-dotnet) |
+| 测试 | xUnit + Moq |
 
 ## 项目结构
 
 ```
-img-yasuo/
-├── main.py              # 主入口点
-├── compressor.py        # 图像压缩逻辑
-├── ui.py                # 用户界面
-├── build.py             # 构建脚本
-├── requirements.txt     # 依赖项
-├── icon.ico             # 应用图标
-├── tests/               # 测试文件
-│   ├── __init__.py
-│   ├── test_compressor.py
-│   └── test_ui.py
-├── docs/                # 文档
-└── README.md            # 项目说明
+ImageMinify/
+├── App.xaml                        # WPF 应用定义
+├── App.xaml.cs                     # 应用启动逻辑
+├── GlobalUsings.cs                 # 全局 using 声明
+├── ImageMinify.csproj              # 项目文件
+├── ImageMinify.sln                 # 解决方案文件
+│
+├── Models/                         # 数据模型层
+│   ├── AppSettingsSnapshot.cs      # 应用设置快照
+│   ├── CompressionResult.cs        # 单张图片压缩结果
+│   ├── CompressionSummary.cs       # 批量压缩统计
+│   ├── EngineCapabilities.cs       # 压缩引擎能力
+│   ├── RenameSettings.cs           # 重命名配置
+│   └── StatusSeverity.cs           # 状态级别枚举
+│
+├── Services/                       # 业务逻辑层
+│   ├── IImageCompressor.cs         # 压缩器接口
+│   ├── ImageCompressor.cs          # 图像压缩主服务（门面）
+│   ├── PngCompressor.cs            # PNG 压缩策略
+│   ├── JpegCompressor.cs           # JPEG 压缩策略
+│   ├── WebpCompressor.cs           # WebP 压缩策略
+│   ├── ImagequantNativeQuantizer.cs # imagequant 原生调用
+│   ├── ExifService.cs              # EXIF 元数据服务
+│   ├── FileRenameService.cs        # 文件重命名服务
+│   ├── ISettingsStore.cs           # 设置存储接口
+│   ├── WindowsSettingsStore.cs     # Windows 注册表存储实现
+│   └── SettingsService.cs          # 设置管理服务
+│
+├── ViewModels/                     # 视图模型层
+│   └── MainViewModel.cs            # 主视图模型（UI 逻辑）
+│
+├── Views/                          # 视图层
+│   └── MainWindow.xaml(.cs)        # 主窗口
+│
+├── Helpers/                        # 工具类
+│   ├── BoolToVisibilityConverter.cs # 布尔转可见性转换器
+│   ├── FileSizeFormatter.cs        # 文件大小格式化
+│   └── NativeLibraryLoader.cs      # 原生库加载器
+│
+├── Assets/                         # 资源文件
+│   └── icon.ico                    # 应用图标
+│
+└── tests/ImageMinify.Tests/        # 单元测试
+    ├── ImageCompressorTests.cs
+    ├── PngCompressorTests.cs
+    ├── JpegCompressorTests.cs
+    ├── FileRenameServiceTests.cs
+    ├── FileSizeFormatterTests.cs
+    ├── MainViewModelTests.cs
+    ├── SettingsServiceTests.cs
+    └── InMemorySettingsStore.cs    # 测试用内存存储
 ```
 
-## 核心模块
+## 架构设计
 
-### main.py
+### MVVM 模式
 
-主程序入口点，初始化应用程序和UI。
-
-### compressor.py
-
-包含所有图像处理和压缩逻辑：
-
-- `ImageCompressor` 类：主要的压缩引擎
-  - `compress_image()`: 压缩单个图像
-  - `compress_directory()`: 批量压缩目录中的图像
-  - `compress_png_advanced()`: 高级PNG压缩
-
-### ui.py
-
-包含用户界面相关代码：
-
-- `ImageCompressorUI` 类：主窗口和UI逻辑
-- `CompressionThread` 类：后台处理线程
-
-## 技术实现
-
-### 图像压缩
-
-图像压缩使用以下技术：
-
-1. **JPEG压缩**：
-   - 使用Pillow的`save()`方法，调整质量参数
-   - 移除EXIF元数据减小文件大小
-   - 使用`optimize=True`参数进一步优化
-
-2. **PNG压缩**：
-   - 使用最高级别的压缩（`compress_level=9`）
-   - 对非透明图像进行颜色量化（减少到256色）
-   - 保留透明通道（如果有）
-
-3. **WebP压缩**：
-   - 使用无损模式（`lossless=True`）
-   - 设置最高质量（`quality=100`）
-
-### 多线程处理
-
-使用PyQt5的`QThread`实现多线程处理：
-
-- 主线程处理UI交互
-- 后台线程执行图像压缩
-- 使用信号/槽机制更新UI和传递结果
-
-### 文件重命名
-
-文件重命名功能实现：
-
-- 使用用户提供的前缀和分隔符
-- 根据文件总数自动计算数字位数
-- 使用`zfill()`添加前导零
-- 使用`os.rename()`重命名文件
-
-## 扩展指南
-
-### 添加新的压缩算法
-
-要添加新的压缩算法，请按照以下步骤操作：
-
-1. 在`compressor.py`中添加新的压缩方法
-2. 在`compress_image()`方法中添加对新算法的调用
-3. 更新UI以提供新算法的选项
-
-示例：
-
-```python
-def compress_image_new_algorithm(self, input_path, output_path):
-    # 实现新的压缩算法
-    pass
+```
+View (XAML) ←→ ViewModel (CommunityToolkit.Mvvm) → Services → Models
 ```
 
-### 添加新的输出格式
+- **View**：纯 XAML 视图，通过数据绑定与 ViewModel 交互
+- **ViewModel**：使用 `[ObservableProperty]` 和 `[RelayCommand]` 管理 UI 状态和命令
+- **Services**：业务逻辑，与 UI 无关
+- **Models**：纯数据类，无逻辑
 
-要添加新的输出格式，请按照以下步骤操作：
+### 压缩服务架构
 
-1. 在`ui.py`的`format_combo`中添加新格式
-2. 在`compressor.py`的`compress_image()`方法中添加对新格式的处理
+`ImageCompressor` 作为门面（Facade），内部委托给具体的格式压缩器：
 
-### 添加新的UI功能
+```
+ImageCompressor (Facade)
+├── PngCompressor       → ImageSharp + imagequant（可选）
+├── JpegCompressor      → ImageSharp + MozJPEG（可选）
+└── WebpCompressor      → ImageSharp
+```
 
-要添加新的UI功能，请按照以下步骤操作：
+### 设置持久化
 
-1. 在`ui.py`的`init_ui()`方法中添加新的UI元素
-2. 添加相应的事件处理方法
-3. 更新`compressor.py`以支持新功能
+通过接口抽象实现可测试性：
 
-## 测试
+```
+ISettingsStore (接口)
+├── WindowsSettingsStore  → Windows 注册表（生产环境）
+└── InMemorySettingsStore → 内存存储（测试环境）
+```
 
-项目使用Python的`unittest`框架进行测试。测试文件位于`tests/`目录中。
+## 开发指南
 
-运行测试：
+### 环境配置
 
 ```bash
-python -m unittest discover tests
+# 还原依赖
+dotnet restore
+
+# 构建
+dotnet build
+
+# 运行
+dotnet run
+
+# 运行测试
+dotnet test
 ```
 
-### 添加新测试
+### 添加新的图片格式支持
 
-添加新测试时，请遵循以下命名约定：
+1. 在 `Services/` 下创建新的压缩器类（如 `AvifCompressor.cs`）
+2. 在 `ImageCompressor` 中注册新格式
+3. 在 `MainViewModel` 中添加 UI 选项
+4. 添加对应的单元测试
 
-- 测试文件名：`test_<module>.py`
-- 测试类名：`Test<Class>`
-- 测试方法名：`test_<method>`
+### 添加新的设置项
 
-示例：
+1. 在 `Models/AppSettingsSnapshot.cs` 中添加属性
+2. 在 `SettingsService` 中添加加载/保存逻辑
+3. 在 `MainViewModel` 中绑定到 UI
 
-```python
-import unittest
-from compressor import ImageCompressor
+### 测试
 
-class TestImageCompressor(unittest.TestCase):
-    def test_compress_image(self):
-        # 测试代码
-        pass
+项目使用 xUnit 测试框架：
+
+```bash
+# 运行所有测试
+dotnet test
+
+# 运行特定测试
+dotnet test --filter "FullyQualifiedName~PngCompressorTests"
 ```
 
-## 构建
+## NuGet 依赖
 
-项目使用PyInstaller构建可执行文件。构建脚本位于`build.py`中。
+| 包 | 用途 |
+|----|------|
+| CommunityToolkit.Mvvm 8.2.2 | MVVM 框架 |
+| MetadataExtractor 2.8.1 | EXIF 元数据读取 |
+| SixLabors.ImageSharp 3.1.5 | 图像处理 |
+| WPF-UI 4.2.0 | Fluent Design 控件库 |
 
-自定义构建过程：
+## 版本历史
 
-1. 修改`build.py`中的PyInstaller参数
-2. 运行构建脚本：`python build.py`
+项目经历了以下技术演变：
 
-## 调试技巧
-
-1. 启用详细日志：
-
-```python
-import logging
-logging.basicConfig(level=logging.DEBUG)
-```
-
-2. 使用PyQt5的调试工具：
-
-```python
-from PyQt5.QtCore import pyqtRemoveInputHook
-import pdb
-
-pyqtRemoveInputHook()
-pdb.set_trace()  # 设置断点
-```
-
-3. 检查图像处理过程：
-
-```python
-# 在compress_image方法中添加
-img.save("debug_output.png")  # 保存中间结果
-```
-
-## 性能优化
-
-- 使用`cProfile`分析性能瓶颈
-- 考虑使用`numpy`加速图像处理
-- 对大图像使用分块处理减少内存使用
+| 版本 | 技术栈 | 说明 |
+|------|--------|------|
+| v0.9 - v1.1 | Python + PyQt5 | 初始版本 |
+| v2.0 | C# + WPF + .NET 10 | 完全重构 |
