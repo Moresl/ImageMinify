@@ -46,6 +46,12 @@
 
 > 截图为旧版 Python 界面，C# 版截图即将更新
 
+## 最新版本
+
+**v2.1.0** - UI 优化与图标更新
+
+从 [Releases](https://github.com/Moresl/ImageMinify/releases/tag/v2.1.0) 下载最新版本。
+
 ## 安装方法
 
 ### 方法 1：下载可执行文件

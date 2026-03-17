@@ -5,6 +5,16 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 并且本项目遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [2.1.0] - 2026-03-17
+
+### 优化
+
+- 更换全新应用图标，多尺寸 ICO（16/32/48/256）确保各处正确显示
+- 按钮去除 WPF-UI hover 变白效果，使用自定义 ControlTemplate
+- 「开始压缩」按钮移入独立的「执行操作」GroupBox，布局更清晰
+- 输入控件尺寸统一优化（前缀输入框、ComboBox 等）
+- 窗口基类从 FluentWindow 改为 Window，提升兼容性
+
 ## [2.0.0] - 2026-03-17
 
 ### 重大变更
