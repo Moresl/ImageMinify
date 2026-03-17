@@ -15,6 +15,7 @@ MsixPackages/
 
 bin/Debug/
 bin/Release/
+publish/
 tests/**/bin/
 tests/**/obj/
 

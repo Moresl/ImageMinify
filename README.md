@@ -42,9 +42,7 @@
 
 ## 截图
 
-![image](https://github.com/user-attachments/assets/a11d90d1-fff5-461e-aad1-2ea72c08778d)
-
-> 截图为旧版 Python 界面，C# 版截图即将更新
+![ImageMinify 主界面](Assets/screenshot.png)
 
 ## 最新版本
 

@@ -42,9 +42,7 @@ This project has two versions for different use cases:
 
 ## Screenshot
 
-![image](https://github.com/user-attachments/assets/a11d90d1-fff5-461e-aad1-2ea72c08778d)
-
-> Screenshot shows the legacy Python UI. C# version screenshot coming soon.
+![ImageMinify Main Interface](Assets/screenshot.png)
 
 ## Installation
 

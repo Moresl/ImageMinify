@@ -1,0 +1,50 @@
+name: 功能请求
+description: 提出一个新功能建议
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您的建议！请详细描述您希望添加的功能。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题背景
+      description: 您的建议是为了解决什么问题？
+      placeholder: 我在使用时经常遇到...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 期望的功能
+      description: 请描述您希望的功能是什么样的
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 替代方案
+      description: 您是否考虑过其他替代方案？
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 参考截图或示例
+      description: 如果有参考的截图或其他软件的类似功能，请提供
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 优先级
+      description: 您认为这个功能的重要程度
+      options:
+        - 高 - 非常需要
+        - 中 - 有了更好
+        - 低 - 锦上添花
+    validations:
+      required: true
