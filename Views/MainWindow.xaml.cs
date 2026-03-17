@@ -2,10 +2,11 @@ using System.Windows;
 using ImageMinify.Services;
 using ImageMinify.ViewModels;
 using Microsoft.Win32;
+using Wpf.Ui.Controls;
 
 namespace ImageMinify.Views;
 
-public partial class MainWindow
+public partial class MainWindow : FluentWindow
 {
     private readonly MainViewModel _viewModel;
     private readonly SettingsService _settingsService;
